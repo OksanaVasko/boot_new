@@ -1,6 +1,6 @@
-package com.example.demo.repository;
+package com.transaction.demo.repository;
 
-import com.example.demo.model.Payment;
+import com.transaction.demo.model.Payment;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

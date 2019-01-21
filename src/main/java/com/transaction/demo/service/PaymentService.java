@@ -1,8 +1,8 @@
-package com.example.demo.service;
+package com.transaction.demo.service;
 
-import com.example.demo.ResultDTO;
-import com.example.demo.model.Payment;
-import com.example.demo.repository.PaymentRepository;
+import com.transaction.demo.dto.ResultDTO;
+import com.transaction.demo.model.Payment;
+import com.transaction.demo.repository.PaymentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

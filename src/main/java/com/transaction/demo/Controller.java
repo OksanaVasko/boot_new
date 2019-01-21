@@ -1,6 +1,8 @@
-package com.example.demo;
+package com.transaction.demo;
 
-import com.example.demo.service.PaymentService;
+import com.transaction.demo.dto.PaymentDTO;
+import com.transaction.demo.dto.ResultDTO;
+import com.transaction.demo.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
