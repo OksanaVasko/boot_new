@@ -1,5 +1,6 @@
-package com.transaction.demo;
+package com.transaction.demo.web;
 
+import com.transaction.demo.exception.BadTransactionException;
 import com.transaction.demo.dto.PaymentDTO;
 import com.transaction.demo.dto.ResultDTO;
 import com.transaction.demo.service.PaymentService;
