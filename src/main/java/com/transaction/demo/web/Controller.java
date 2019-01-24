@@ -1,6 +1,5 @@
 package com.transaction.demo.web;
 
-import com.transaction.demo.exception.BadTransactionException;
 import com.transaction.demo.dto.PaymentDTO;
 import com.transaction.demo.dto.ResultDTO;
 import com.transaction.demo.service.PaymentService;
@@ -31,8 +30,12 @@ public class Controller {
 
     @RequestMapping(path = "/transactions", method = POST)
     public ResponseEntity addPayment(@RequestBody @Validated PaymentDTO paymentDTO) {
-        if (paymentDTO.getTimestamp().isAfter(LocalDateTime.now())) {
-            throw new BadTransactionException();
+        LocalDateTime timeNow = LocalDateTime.now();
+        if (paymentDTO.getTimestamp().isAfter(timeNow)) {
+            return new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        if (paymentDTO.getTimestamp().plusSeconds(60).isBefore(timeNow)) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
         paymentService.addPayment(paymentDTO.getAmount(), paymentDTO.getTimestamp());
         return new ResponseEntity(HttpStatus.CREATED);
