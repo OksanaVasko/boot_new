@@ -28,8 +28,7 @@ public class PaymentService {
         paymentRepository.deleteAll();
     }
 
-    public ResultDTO getPaymensForLastOneMinute() {
-        LocalDateTime oneMinuteBeforeNow = LocalDateTime.now().minusHours(2).minusMinutes(1);
+    public ResultDTO getPaymensForLastOneMinute(LocalDateTime oneMinuteBeforeNow) {
         List<Payment> payments = paymentRepository.findAllPaymentsInLastOneMinute(oneMinuteBeforeNow);
         ResultDTO resultDTO;
         if (payments.isEmpty()) {

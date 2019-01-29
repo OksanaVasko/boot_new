@@ -25,7 +25,8 @@ public class Controller {
     @RequestMapping(value = "/statistics", method = GET)
     public @ResponseBody
     ResultDTO getPayments() {
-        return paymentService.getPaymensForLastOneMinute();
+        LocalDateTime oneMinuteBeforeNow = LocalDateTime.now().minusMinutes(1);
+        return paymentService.getPaymensForLastOneMinute(oneMinuteBeforeNow);
     }
 
     @RequestMapping(path = "/transactions", method = POST)
