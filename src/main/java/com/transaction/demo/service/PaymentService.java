@@ -3,15 +3,14 @@ package com.transaction.demo.service;
 import com.transaction.demo.dto.ResultDTO;
 import com.transaction.demo.model.Payment;
 import com.transaction.demo.repository.PaymentRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.Comparator;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 
 @Service
@@ -40,16 +39,13 @@ public class PaymentService {
     }
 
     private ResultDTO processResult(List<Payment> payments) {
-        Payment minPayment = payments.stream().min(Comparator.comparing(Payment::getAmount)).orElseThrow(NoSuchElementException::new);
-        Payment maxPayment = payments.stream().max(Comparator.comparing(Payment::getAmount)).orElseThrow(NoSuchElementException::new);
-        BigDecimal sum = payments.stream().map(Payment::getAmount).reduce(BigDecimal::add).get();
-        BigDecimal average = sum.divide(BigDecimal.valueOf(payments.size()), 2, BigDecimal.ROUND_HALF_UP);
+        DoubleSummaryStatistics statistics = payments.stream().map(Payment::getAmount).mapToDouble(BigDecimal::doubleValue).summaryStatistics();
         ResultDTO resultDTO = new ResultDTO();
-        resultDTO.setAvg(average);
-        resultDTO.setCount((long) payments.size());
-        resultDTO.setMax(maxPayment.getAmount());
-        resultDTO.setMin(minPayment.getAmount());
-        resultDTO.setSum(sum);
+        resultDTO.setCount(statistics.getCount());
+        resultDTO.setAvg(BigDecimal.valueOf(statistics.getAverage()).setScale(2, RoundingMode.HALF_UP));
+        resultDTO.setMax(BigDecimal.valueOf(statistics.getMax()).setScale(2, RoundingMode.HALF_UP));
+        resultDTO.setMin(BigDecimal.valueOf(statistics.getMin()).setScale(2, RoundingMode.HALF_UP));
+        resultDTO.setSum(BigDecimal.valueOf(statistics.getSum()).setScale(2, RoundingMode.HALF_UP));
         return resultDTO;
     }
 

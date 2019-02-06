@@ -33,7 +33,7 @@ public class PaymentServiceTests {
         List<Payment> payments = createPaymentsList(timeStamp);
         when(paymentRepository.findAllPaymentsInLastOneMinute(timeStamp)).thenReturn(payments);
         ResultDTO resultDTOCurrent = paymentService.getPaymensForLastOneMinute(timeStamp);
-        ResultDTO resultDTOExpected = new ResultDTO(new BigDecimal("150"), new BigDecimal("75.00"), new BigDecimal("80"), new BigDecimal("70"), new Long(2));
+        ResultDTO resultDTOExpected = new ResultDTO(new BigDecimal("150.00"), new BigDecimal("75.00"), new BigDecimal("80.00"), new BigDecimal("70.00"), new Long(2));
         assertEquals(resultDTOCurrent, resultDTOExpected);
 
     }
